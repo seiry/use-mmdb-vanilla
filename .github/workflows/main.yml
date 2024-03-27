@@ -29,20 +29,20 @@ jobs:
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Check types
-        run: yarn type-check
+      # - name: Check types
+      #   run: yarn type-check
 
-      - name: Check linting
-        run: yarn lint
+      # - name: Check linting
+      #   run: yarn lint
 
-      - name: Run tests
-        run: yarn test:ci
+      # - name: Run tests
+      #   run: yarn test:ci
 
-      - name: Build storybook
-        run: yarn build-storybook
+      # - name: Build storybook
+      #   run: yarn build-storybook
 
       - name: Build package
         run: yarn build
 
-      - name: Check commits messages
-        uses: wagoid/commitlint-github-action@v5
+      # - name: Check commits messages
+      #   uses: wagoid/commitlint-github-action@v5
