@@ -47,6 +47,7 @@
     "prettier": "^3.2.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "release-it": "^17.1.1",
     "stylelint": "^16.2.1",
     "stylelint-config-recommended": "^14.0.0",
     "stylelint-config-sass-guidelines": "^11.0.0",
@@ -55,5 +56,16 @@
     "vite": "^5.1.4",
     "vite-plugin-dts": "^3.7.3"
   },
-  "packageManager": "yarn@4.1.0"
+  "packageManager": "yarn@4.1.0",
+  "release-it": {
+    "git": {
+      "commitMessage": "chore(release): v${version}"
+    },
+    "github": {
+      "release": true
+    },
+    "npm": {
+      "publish": false
+    }
+  }
 }
