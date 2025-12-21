@@ -35,11 +35,11 @@ jobs:
 
       - run: yarn build
 
-      - run: npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      # - run: npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - run: npm publish --access public --provenance
+      - run: npm publish --access public
 
       # - id: build-publish
       #   name: Publish storybook
