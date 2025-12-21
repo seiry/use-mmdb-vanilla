@@ -24,9 +24,7 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          # node-version: lts/*
           node-version-file: '.nvmrc'
-          # cache: 'yarn'
 
       - name: enable corepack
         run: corepack enable
@@ -35,10 +33,6 @@ jobs:
         run: yarn install --immutable
 
       - run: yarn build
-
-      # - run: npm config set //registry.npmjs.org/:_authToken=$NODE_AUTH_TOKEN
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - run: npm publish --access public
 
