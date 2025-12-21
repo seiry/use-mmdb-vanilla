@@ -39,7 +39,10 @@ jobs:
       - name: Publish to npmjs
         run: npm publish --access public
 
-      # Publish to GitHub Packages
+      # Publish to GitHub Packages (without committing package.json changes)
+      - name: Prepare package.json for GitHub Packages
+        run: node -e "const fs=require('fs'); const p='./package.json'; const j=JSON.parse(fs.readFileSync(p,'utf8')); j.name=`@${process.env.GITHUB_REPOSITORY_OWNER}/${j.name.replace(/^@[^/]+\//,'')}`; fs.writeFileSync(p, JSON.stringify(j,null,2)+'\n');"
+
       - name: Configure npm for GitHub Packages
         run: |
           echo "@${{ github.repository_owner }}:registry=https://npm.pkg.github.com" >> ~/.npmrc
@@ -48,7 +51,10 @@ jobs:
       - name: Publish to GitHub Packages
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: npm publish --registry=https://npm.pkg.github.com --access public
+        run: npm publish --registry=https://npm.pkg.github.com
+
+      - name: Restore package.json
+        run: git checkout -- package.json
 
       # - id: build-publish
       #   name: Publish storybook
