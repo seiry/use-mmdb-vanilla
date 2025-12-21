@@ -41,11 +41,11 @@ jobs:
 
       # Publish to GitHub Packages (without committing package.json changes)
       - name: Prepare package.json for GitHub Packages
-        run: node -e "const fs=require('fs'); const p='./package.json'; const j=JSON.parse(fs.readFileSync(p,'utf8')); j.name=`@${process.env.GITHUB_REPOSITORY_OWNER}/${j.name.replace(/^@[^/]+\//,'')}`; fs.writeFileSync(p, JSON.stringify(j,null,2)+'\n');"
+        run: node -e "const fs=require('fs'); const p='./package.json'; const j=JSON.parse(fs.readFileSync(p,'utf8')); j.name=`@seiry/${j.name.replace(/^@[^/]+\\//,'')}`; fs.writeFileSync(p, JSON.stringify(j,null,2)+'\\n');"
 
       - name: Configure npm for GitHub Packages
         run: |
-          echo "@${{ github.repository_owner }}:registry=https://npm.pkg.github.com" >> ~/.npmrc
+          echo "@seiry:registry=https://npm.pkg.github.com" >> ~/.npmrc
           echo "//npm.pkg.github.com/:_authToken=${{ secrets.GITHUB_TOKEN }}" >> ~/.npmrc
 
       - name: Publish to GitHub Packages
