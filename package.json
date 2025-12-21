@@ -60,7 +60,7 @@
     "vite": "^5.1.4",
     "vite-plugin-dts": "^3.7.3"
   },
-  "packageManager": "yarn@4.1.0",
+  "packageManager": "yarn@4.12.0",
   "release-it": {
     "git": {
       "commitMessage": "chore(release): v${version}"
