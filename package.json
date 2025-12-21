@@ -1,6 +1,6 @@
 {
   "name": "use-mmdb-vanilla",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "a simple lib, show ip geo, using mmdb file",
   "author": "Seiry",
   "homepage": "https://github.com/seiry/use-mmdb-vanilla/",
