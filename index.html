@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,7 +7,18 @@
     <title>Vite + React + TS</title>
   </head>
   <body>
+    <h2>in react</h2>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+
+    <h2>in raw js</h2>
+    <script src="./dist/index.iife.js"></script>
+    <div id="raw"></div>
+    <script async>
+      const ip = "112.238.182.153";
+      getGeoFromIp(ip).then((geo) => {
+        document.getElementById("raw").innerText = `${ip}: ${geo}`;
+      });
+    </script>
   </body>
 </html>
