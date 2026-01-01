@@ -10,10 +10,7 @@
   },
   "license": "MIT",
   "keywords": [
-    "vite",
     "typescript",
-    "npm",
-    "package",
     "mmdb"
   ],
   "main": "dist/index.cjs.js",
