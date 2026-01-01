@@ -35,7 +35,7 @@
   },
   "dependencies": {
     "buffer": "^6.0.3",
-    "mmdb.js": "^1.0.1"
+    "mmdb.js": "^2.0.3"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",

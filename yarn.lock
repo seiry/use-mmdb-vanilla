@@ -5528,12 +5528,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"mmdb.js@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "mmdb.js@npm:1.0.1"
+"mmdb.js@npm:^2.0.3":
+  version: 2.0.3
+  resolution: "mmdb.js@npm:2.0.3"
   dependencies:
     buffer: "npm:^6.0.3"
-  checksum: 10c0/610a3556fee2c5c36e26af9da07baf4f68b2d8513c3c6dcf0be27abd4eafe9851d81583f0dfd4a1e343a84b3327a5d70e2dffc3d599b33e0140f31bf2ec6f59e
+  checksum: 10c0/238a4c586f0978c60d1aee2f41398e2ffc90ae8beb6ecfcf4969c2553765695260d49f313eb7d99d997d1a0b5ccdd962cbcd66a127bb8ad6dc7131f37e2e9a31
   languageName: node
   linkType: hard
 
@@ -7645,7 +7645,7 @@ __metadata:
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-prettier: "npm:^5.1.3"
     happy-dom: "npm:^20.0.11"
-    mmdb.js: "npm:^1.0.1"
+    mmdb.js: "npm:^2.0.3"
     prettier: "npm:^3.2.5"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
