@@ -7966,6 +7966,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"undici@npm:^7.2.1":
+  version: 7.16.0
+  resolution: "undici@npm:7.16.0"
+  checksum: 10c0/efd867792e9f233facf9efa0a087e2d9c3e4415c0b234061b9b40307ca4fa01d945fee4d43c7b564e1b80e0d519bcc682f9f6e0de13c717146c00a80e2f1fb0f
+  languageName: node
+  linkType: hard
+
 "unicorn-magic@npm:^0.1.0":
   version: 0.1.0
   resolution: "unicorn-magic@npm:0.1.0"
@@ -8091,6 +8098,7 @@ __metadata:
     stylelint-config-sass-guidelines: "npm:^11.0.0"
     tslib: "npm:^2.6.2"
     typescript: "npm:^5.3.3"
+    undici: "npm:^7.2.1"
     vite: "npm:^5.1.4"
     vite-plugin-dts: "npm:^4.5.4"
     vitest: "npm:^4.0.16"

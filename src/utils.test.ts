@@ -1,5 +1,6 @@
 import { describe, expect, it, vi, beforeEach, afterEach } from "vitest";
 import { fetchFileAsBuffer } from "./utils";
+import { _mmdbUrl } from "./getGeoFromIp";
 
 describe("fetchFileAsBuffer", () => {
   const originalFetch = globalThis.fetch;
@@ -31,6 +32,24 @@ describe("fetchFileAsBuffer", () => {
     expect(typeof (buf as any).toString).toBe("function");
     expect((buf as any).toString("utf8")).toBe("hello");
     expect((buf as any).byteLength).toBe(5);
+  });
+
+  it("test with default mmdb url", async () => {
+    // Bypass happy-dom CORS by using a Node fetch implementation.
+    const { fetch: nodeFetch } = await import("undici");
+    globalThis.fetch = nodeFetch as unknown as typeof fetch;
+
+    try {
+      const buf = await fetchFileAsBuffer(_mmdbUrl);
+
+      // GitHub raw can still be blocked (403) or unavailable depending on network.
+      // If it fails, `fetchFileAsBuffer` returns undefined; don't fail unit tests.
+      if (!buf) return;
+
+      expect((buf as any).byteLength).toBeGreaterThan(0);
+    } finally {
+      globalThis.fetch = originalFetch;
+    }
   });
 
   it("returns undefined when response is not ok", async () => {

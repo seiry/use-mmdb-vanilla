@@ -1,4 +1,4 @@
-const _mmdbUrl =
+export const _mmdbUrl =
   "https://raw.githubusercontent.com/Max-Sum/17mon-mmdb/release/Country.mmdb";
 import * as mmdb from "mmdb.js";
 import { fetchFileAsBuffer } from "./utils";
