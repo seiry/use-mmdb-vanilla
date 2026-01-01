@@ -41,7 +41,7 @@
     "mmdb.js": "^1.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20.11.24",
+    "@types/node": "^24.0.0",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
     "@typescript-eslint/eslint-plugin": "^8.50.1",
@@ -63,7 +63,7 @@
     "tslib": "^2.6.2",
     "typescript": "^5.3.3",
     "undici": "^7.2.1",
-    "vite": "^5.1.4",
+    "vite": "^7.3.0",
     "vite-plugin-dts": "^4.5.4",
     "vitest": "^4.0.16"
   },
