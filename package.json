@@ -40,7 +40,7 @@
   "devDependencies": {
     "@types/node": "^24.0.0",
     "@types/react": "^18.2.47",
-    "@types/react-dom": "^18.2.18",
+    "@types/react-dom": "^19.2.3",
     "@typescript-eslint/eslint-plugin": "^8.50.1",
     "@typescript-eslint/parser": "^8.51.0",
     "@vitejs/plugin-react": "^5.1.2",
@@ -52,7 +52,7 @@
     "happy-dom": "^20.0.11",
     "prettier": "^3.2.5",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^19.2.3",
     "release-it": "^17.1.1",
     "stylelint": "^16.2.1",
     "stylelint-config-recommended": "^14.0.0",
