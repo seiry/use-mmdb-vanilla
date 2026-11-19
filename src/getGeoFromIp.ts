@@ -1,5 +1,5 @@
 import * as mmdb from "mmdb.js";
-import { isValidIp, normalizeIp } from "./ip";
+import { parseIp } from "./ip";
 import { fetchFileAsBuffer } from "./utils";
 
 export const _mmdbUrl =
@@ -35,17 +35,17 @@ export const getReader = (mmdbUrl: string = _mmdbUrl) => {
 };
 
 export const getGeoFromIp = async (
-  rawIp: string,
+  ip: string,
   mmdbUrl: string = _mmdbUrl,
 ): Promise<string> => {
-  const ip = normalizeIp(rawIp);
-  if (!isValidIp(ip)) return NOT_AVAILABLE;
+  const normalized = parseIp(ip);
+  if (!normalized) return NOT_AVAILABLE;
 
   const reader = await getReader(mmdbUrl);
   if (!reader) return NOT_AVAILABLE;
 
   try {
-    const names = reader.get(ip)?.country?.names;
+    const names = reader.get(normalized)?.country?.names;
     return names?.["zh-CN"] ?? names?.en ?? NOT_AVAILABLE;
   } catch {
     return NOT_AVAILABLE;

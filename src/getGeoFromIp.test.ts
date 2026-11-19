@@ -176,6 +176,10 @@ describe("getGeoFromIp", () => {
     it.each([
       ["::ffff:1.0.0.1", "测试国甲"],
       ["::FFFF:1.0.0.1", "测试国甲"],
+      ["::ffff:100:1", "测试国甲"],
+      ["::ffff:808:808", "Fixtureland B"],
+      ["0:0:0:0:0:ffff:1.0.0.1", "测试国甲"],
+      ["::FFFF:0100:0001", "测试国甲"],
       [" 1.0.0.1 ", "测试国甲"],
       ["1.0.0.1\n", "测试国甲"],
       ["2404:6800::1", "测试国丙"],
@@ -189,10 +193,24 @@ describe("getGeoFromIp", () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    it("rejects leading-zero IPv4 without fetching", async () => {
+    it.each(["01.2.3.4", "::ffff:01.0.0.1"])(
+      "rejects leading-zero IPv4 %j without fetching",
+      async (ip) => {
+        const fetchMock = stubFetch();
+        const { getGeoFromIp } = await load();
+        expect(await getGeoFromIp(ip)).toBe("n/a");
+        expect(fetchMock).not.toHaveBeenCalled();
+      },
+    );
+
+    it.each([
+      ["undefined", undefined as unknown as string],
+      ["null", null as unknown as string],
+      ["a number", 42 as unknown as string],
+    ])("resolves n/a for %s without fetching", async (_label, ip) => {
       const fetchMock = stubFetch();
       const { getGeoFromIp } = await load();
-      expect(await getGeoFromIp("01.2.3.4")).toBe("n/a");
+      await expect(getGeoFromIp(ip)).resolves.toBe("n/a");
       expect(fetchMock).not.toHaveBeenCalled();
     });
   });
