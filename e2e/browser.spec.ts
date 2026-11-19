@@ -18,7 +18,9 @@ const IPS = [
 ];
 const EXPECTED = ["测试国甲", "Fixtureland B", "n/a", "测试国丙", "n/a", "n/a"];
 
-const readmeSnippet = (build: string) => `<script src="${CDN}/index.${build}.js"></script>
+const readmeSnippet = (
+  build: string,
+) => `<script src="${CDN}/index.${build}.js"></script>
 <div id="raw"></div>
 <script async>
   const ip = "112.238.182.153";
@@ -28,7 +30,9 @@ const readmeSnippet = (build: string) => `<script src="${CDN}/index.${build}.js"
 </script>`;
 
 for (const build of ["umd", "iife"] as const) {
-  test(`README browser snippet works with the ${build} build`, async ({ page }, testInfo) => {
+  test(`README browser snippet works with the ${build} build`, async ({
+    page,
+  }, testInfo) => {
     const fixture = await readFile(path.join(ROOT, "test/fixtures/geo.mmdb"));
     const bundle = await readFile(path.join(ROOT, `dist/index.${build}.js`));
     let mmdbHits = 0;
@@ -42,7 +46,10 @@ for (const build of ["umd", "iife"] as const) {
           body: `<!doctype html><html><body>${readmeSnippet(build)}</body></html>`,
         });
       } else if (url === `${CDN}/index.${build}.js`) {
-        await route.fulfill({ contentType: "application/javascript", body: bundle });
+        await route.fulfill({
+          contentType: "application/javascript",
+          body: bundle,
+        });
       } else if (url === DEFAULT_MMDB_URL) {
         mmdbHits += 1;
         await route.fulfill({
@@ -65,7 +72,11 @@ for (const build of ["umd", "iife"] as const) {
       (ips) =>
         Promise.all(
           ips.map((ip) =>
-            (window as unknown as { getGeoFromIp: (ip: string) => Promise<string> }).getGeoFromIp(ip),
+            (
+              window as unknown as {
+                getGeoFromIp: (ip: string) => Promise<string>;
+              }
+            ).getGeoFromIp(ip),
           ),
         ),
       IPS,
@@ -74,8 +85,14 @@ for (const build of ["umd", "iife"] as const) {
     const report = { build, ips: IPS, results, mmdbHits, unexpectedRequests };
     const json = JSON.stringify(report, null, 2);
     await mkdir(path.join(ROOT, "test-results"), { recursive: true });
-    await writeFile(path.join(ROOT, `test-results/browser-${build}.json`), json);
-    await testInfo.attach(`report-${build}.json`, { body: json, contentType: "application/json" });
+    await writeFile(
+      path.join(ROOT, `test-results/browser-${build}.json`),
+      json,
+    );
+    await testInfo.attach(`report-${build}.json`, {
+      body: json,
+      contentType: "application/json",
+    });
 
     await page.evaluate((text) => {
       const pre = document.createElement("pre");

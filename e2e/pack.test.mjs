@@ -9,7 +9,10 @@ import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 
 const run = promisify(execFile);
-const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const repoRoot = path.resolve(
+  path.dirname(fileURLToPath(import.meta.url)),
+  "..",
+);
 const tsc = path.join(repoRoot, "node_modules/typescript/bin/tsc");
 
 const IPS = [
@@ -28,8 +31,12 @@ const [url, ...ips] = process.argv.slice(1);
 Promise.all(ips.map((ip) => getGeoFromIp(ip, url))).then((r) => console.log(JSON.stringify(r)));
 `;
 
-const esmScript = lookupScript('import { getGeoFromIp } from "use-mmdb-vanilla";');
-const cjsScript = lookupScript('const { getGeoFromIp } = require("use-mmdb-vanilla");');
+const esmScript = lookupScript(
+  'import { getGeoFromIp } from "use-mmdb-vanilla";',
+);
+const cjsScript = lookupScript(
+  'const { getGeoFromIp } = require("use-mmdb-vanilla");',
+);
 const liveEsmScript = `
 import { getGeoFromIp } from "use-mmdb-vanilla";
 console.log(JSON.stringify(await getGeoFromIp("112.238.182.153")));
@@ -62,12 +69,16 @@ describe("packed package consumed from a clean project", () => {
 
   const node = async (args) => {
     try {
-      const { stdout } = await run(process.execPath, args, { cwd: consumerDir });
+      const { stdout } = await run(process.execPath, args, {
+        cwd: consumerDir,
+      });
       return JSON.parse(stdout.trim());
     } catch (error) {
       const stderr = String(error.stderr ?? error.message);
       const lines = stderr.split("\n").map((line) => line.slice(0, 200));
-      assert.fail(`node exited with ${error.code}:\n${lines.slice(0, 12).join("\n")}`);
+      assert.fail(
+        `node exited with ${error.code}:\n${lines.slice(0, 12).join("\n")}`,
+      );
     }
   };
 
@@ -91,27 +102,39 @@ describe("packed package consumed from a clean project", () => {
       cwd: consumerDir,
     });
 
-    const fixture = await readFile(path.join(repoRoot, "test/fixtures/geo.mmdb"));
+    const fixture = await readFile(
+      path.join(repoRoot, "test/fixtures/geo.mmdb"),
+    );
     server = http.createServer((req, res) => {
       if (req.url !== "/geo.mmdb") {
         res.writeHead(404).end();
         return;
       }
       hits += 1;
-      res.writeHead(200, { "content-type": "application/octet-stream" }).end(fixture);
+      res
+        .writeHead(200, { "content-type": "application/octet-stream" })
+        .end(fixture);
     });
     await new Promise((resolve) => server.listen(0, "127.0.0.1", resolve));
     serverUrl = `http://127.0.0.1:${server.address().port}/geo.mmdb`;
   });
 
   after(async () => {
-    await new Promise((resolve) => (server ? server.close(resolve) : resolve()));
+    await new Promise((resolve) =>
+      server ? server.close(resolve) : resolve(),
+    );
     if (workDir) await rm(workDir, { recursive: true, force: true });
   });
 
   test("ESM import resolves, loads in Node and downloads the database once", async () => {
     const before = hits;
-    const results = await node(["--input-type=module", "-e", esmScript, serverUrl, ...IPS]);
+    const results = await node([
+      "--input-type=module",
+      "-e",
+      esmScript,
+      serverUrl,
+      ...IPS,
+    ]);
     assert.deepEqual(results, EXPECTED);
     assert.equal(hits - before, 1);
   });
@@ -147,8 +170,12 @@ describe("packed package consumed from a clean project", () => {
     });
   });
 
-  test("default database url resolves a real IP", { skip: process.env.E2E_LIVE !== "1" }, async () => {
-    const result = await node(["--input-type=module", "-e", liveEsmScript]);
-    assert.equal(result, "中国");
-  });
+  test(
+    "default database url resolves a real IP",
+    { skip: process.env.E2E_LIVE !== "1" },
+    async () => {
+      const result = await node(["--input-type=module", "-e", liveEsmScript]);
+      assert.equal(result, "中国");
+    },
+  );
 });

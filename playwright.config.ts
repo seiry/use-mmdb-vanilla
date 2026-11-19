@@ -11,10 +11,7 @@ export default defineConfig({
       use: {
         ...devices["Desktop Chrome"],
         launchOptions: {
-          args: [
-            "--disable-web-security",
-            "--disable-site-isolation-trials",
-          ],
+          args: ["--disable-web-security", "--disable-site-isolation-trials"],
         },
       },
     },

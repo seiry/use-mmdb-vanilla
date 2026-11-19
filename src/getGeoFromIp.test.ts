@@ -17,7 +17,9 @@ const okResponse = () => ({
     ),
 });
 
-const stubFetch = (...responses: Array<ReturnType<typeof okResponse> | { ok: false }>) => {
+const stubFetch = (
+  ...responses: Array<ReturnType<typeof okResponse> | { ok: false }>
+) => {
   const fetchMock = vi.fn(async () => responses.shift() ?? okResponse());
   vi.stubGlobal("fetch", fetchMock);
   return fetchMock;
