@@ -31,13 +31,16 @@
     "format:styles": "stylelint ./**/*.{css,scss} --fix",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage",
+    "e2e:pack": "node --test e2e/pack.test.mjs",
+    "e2e:browser": "playwright test"
   },
   "dependencies": {
     "buffer": "^6.0.3",
     "mmdb.js": "^2.0.3"
   },
   "devDependencies": {
+    "@playwright/test": "1.65.1",
     "@types/node": "^24.0.0",
     "@types/react": "^18.2.47",
     "@types/react-dom": "^18.2.18",
