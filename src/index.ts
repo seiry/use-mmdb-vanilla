@@ -2,5 +2,7 @@ import { getGeoFromIp } from "./getGeoFromIp";
 
 export { getGeoFromIp };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(window as any).getGeoFromIp = getGeoFromIp;
+if (typeof window !== "undefined") {
+  (window as unknown as { getGeoFromIp: typeof getGeoFromIp }).getGeoFromIp =
+    getGeoFromIp;
+}

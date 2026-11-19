@@ -35,3 +35,16 @@ getGeoFromIp(ip).then(()=>{
 });
 
 ```
+
+Works in Node as well, with ESM `import` and CommonJS `require("use-mmdb-vanilla")`.
+
+### custom database
+`getGeoFromIp(ip, mmdbUrl?)` takes an optional URL of a country `.mmdb` file. Each URL is downloaded once and its database is kept in memory; omit it to use the default database.
+
+The IP may be IPv4, IPv6 or IPv4-mapped IPv6 (`::ffff:1.2.3.4`).
+
+```ts
+getGeoFromIp(ip, "https://example.com/Country.mmdb").then((geo) => {
+  // zh-CN name, else en name, else "n/a"
+});
+```

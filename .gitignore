@@ -35,3 +35,8 @@ lerna-debug.log*
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+
+# test output
+test-results
+playwright-report
+coverage
