@@ -13,9 +13,23 @@
     "typescript",
     "mmdb"
   ],
-  "main": "dist/index.cjs.js",
-  "module": "dist/index.es.js",
-  "types": "dist/index.d.ts",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.es.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.es.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    },
+    "./dist/*": "./dist/*",
+    "./package.json": "./package.json"
+  },
   "type": "module",
   "files": [
     "dist"
@@ -23,7 +37,7 @@
   "scripts": {
     "dev": "tsc && vite build --watch",
     "start": "vite --host --open",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build && cp dist/index.d.ts dist/index.d.cts",
     "build:types": "dts-bundle-generator --config ./dts-bundle-generator.config.ts",
     "lint:scripts": "eslint ./src --ext .ts",
     "lint:styles": "stylelint ./**/*.{css,scss}",
