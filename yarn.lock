@@ -5545,11 +5545,11 @@ __metadata:
   linkType: hard
 
 "mmdb.js@npm:^2.0.3":
-  version: 2.0.3
-  resolution: "mmdb.js@npm:2.0.3"
+  version: 2.0.4
+  resolution: "mmdb.js@npm:2.0.4"
   dependencies:
     buffer: "npm:^6.0.3"
-  checksum: 10c0/238a4c586f0978c60d1aee2f41398e2ffc90ae8beb6ecfcf4969c2553765695260d49f313eb7d99d997d1a0b5ccdd962cbcd66a127bb8ad6dc7131f37e2e9a31
+  checksum: 10c0/256a78c3a50b63681e36f7d11fb73aca8390d7e13e0de79d2380f2c96acf6590eaeff9c126b53c1d83cd1103001748c93e7d3490dfb706e6c734c4f5972c467b
   languageName: node
   linkType: hard
 
