@@ -193,15 +193,18 @@ describe("getGeoFromIp", () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    it.each(["01.2.3.4", "::ffff:01.0.0.1"])(
-      "rejects leading-zero IPv4 %j without fetching",
-      async (ip) => {
-        const fetchMock = stubFetch();
-        const { getGeoFromIp } = await load();
-        expect(await getGeoFromIp(ip)).toBe("n/a");
-        expect(fetchMock).not.toHaveBeenCalled();
-      },
-    );
+    it.each([
+      "01.2.3.4",
+      "::ffff:01.0.0.1",
+      "::ffff:1.0.0.01",
+      "::ffff:010.010.010.010",
+      "2404:6800::01.2.3.4",
+    ])("rejects leading-zero IPv4 %j without fetching", async (ip) => {
+      const fetchMock = stubFetch();
+      const { getGeoFromIp } = await load();
+      expect(await getGeoFromIp(ip)).toBe("n/a");
+      expect(fetchMock).not.toHaveBeenCalled();
+    });
 
     it.each([
       ["undefined", undefined as unknown as string],

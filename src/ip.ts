@@ -10,6 +10,8 @@ const toDottedQuad = (high: string, low: string) => {
 
 const parseIpv6 = (ip: string) => {
   if (!ip.includes(":") || !IPV6_CHARS.test(ip)) return undefined;
+  const tail = ip.slice(ip.lastIndexOf(":") + 1);
+  if (tail.includes(".") && !IPV4.test(tail)) return undefined;
   try {
     const { hostname } = new URL(`http://[${ip}]/`);
     const mapped = SERIALIZED_IPV4_MAPPED.exec(hostname);

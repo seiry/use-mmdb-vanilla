@@ -15,8 +15,23 @@ const IPS = [
   "2404:6800::1",
   "999.7.7.7",
   "772404:6800:400a:804::200e99",
+  "::ffff:010.010.010.010",
+  "::ffff:01.0.0.1",
+  "2404:6800::01.2.3.4",
+  "::ffff:808:808",
 ];
-const EXPECTED = ["测试国甲", "Fixtureland B", "n/a", "测试国丙", "n/a", "n/a"];
+const EXPECTED = [
+  "测试国甲",
+  "Fixtureland B",
+  "n/a",
+  "测试国丙",
+  "n/a",
+  "n/a",
+  "n/a",
+  "n/a",
+  "n/a",
+  "Fixtureland B",
+];
 
 const readmeSnippet = (
   build: string,
