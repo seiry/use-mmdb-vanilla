@@ -87,15 +87,23 @@ describe("getGeoFromIp", () => {
       expect(fetchMock).toHaveBeenCalledTimes(1);
     });
 
-    it("serves a repeated lookup from cache", async () => {
+    it("does not download the database again for a repeated lookup", async () => {
       const fetchMock = stubFetch();
-      const { Reader } = await import("mmdb.js");
-      const getSpy = vi.spyOn(Reader.prototype, "get");
       const { getGeoFromIp } = await load();
       expect(await getGeoFromIp("1.0.0.1")).toBe("测试国甲");
       expect(await getGeoFromIp("1.0.0.1")).toBe("测试国甲");
       expect(fetchMock).toHaveBeenCalledTimes(1);
-      expect(getSpy).toHaveBeenCalledTimes(1);
+    });
+
+    it("returns n/a instead of throwing when the reader throws", async () => {
+      stubFetch();
+      const { Reader } = await import("mmdb.js");
+      vi.spyOn(Reader.prototype, "get").mockImplementationOnce(() => {
+        throw new Error("corrupt");
+      });
+      const { getGeoFromIp } = await load();
+      await expect(getGeoFromIp("1.0.0.1")).resolves.toBe("n/a");
+      expect(await getGeoFromIp("1.0.0.1")).toBe("测试国甲");
     });
 
     it("returns n/a on a failed download and retries on the next call", async () => {
@@ -166,16 +174,26 @@ describe("getGeoFromIp", () => {
     });
 
     it.each([
-      "::1",
-      "2404:6800::1",
-      "::ffff:1.0.0.1",
-      "0.0.0.0",
-      "255.255.255.255",
-    ])("accepts valid edge case %j and reaches the reader", async (ip) => {
+      ["::ffff:1.0.0.1", "测试国甲"],
+      ["::FFFF:1.0.0.1", "测试国甲"],
+      [" 1.0.0.1 ", "测试国甲"],
+      ["1.0.0.1\n", "测试国甲"],
+      ["2404:6800::1", "测试国丙"],
+      ["::1", "n/a"],
+      ["0.0.0.0", "n/a"],
+      ["255.255.255.255", "n/a"],
+    ])("resolves valid input %j to %s via the reader", async (ip, expected) => {
       const fetchMock = stubFetch();
       const { getGeoFromIp } = await load();
-      expect(typeof (await getGeoFromIp(ip))).toBe("string");
+      expect(await getGeoFromIp(ip)).toBe(expected);
       expect(fetchMock).toHaveBeenCalledTimes(1);
+    });
+
+    it("rejects leading-zero IPv4 without fetching", async () => {
+      const fetchMock = stubFetch();
+      const { getGeoFromIp } = await load();
+      expect(await getGeoFromIp("01.2.3.4")).toBe("n/a");
+      expect(fetchMock).not.toHaveBeenCalled();
     });
   });
 });

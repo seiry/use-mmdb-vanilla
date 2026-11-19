@@ -1,5 +1,5 @@
 import * as mmdb from "mmdb.js";
-import { isValidIp } from "./ip";
+import { isValidIp, normalizeIp } from "./ip";
 import { fetchFileAsBuffer } from "./utils";
 
 export const _mmdbUrl =
@@ -34,23 +34,20 @@ export const getReader = (mmdbUrl: string = _mmdbUrl) => {
   return loading;
 };
 
-const cache = new Map<string, string>();
-
 export const getGeoFromIp = async (
-  ip: string,
+  rawIp: string,
   mmdbUrl: string = _mmdbUrl,
 ): Promise<string> => {
+  const ip = normalizeIp(rawIp);
   if (!isValidIp(ip)) return NOT_AVAILABLE;
-
-  const cacheKey = `${mmdbUrl}\n${ip}`;
-  const cached = cache.get(cacheKey);
-  if (cached !== undefined) return cached;
 
   const reader = await getReader(mmdbUrl);
   if (!reader) return NOT_AVAILABLE;
 
-  const names = reader.get(ip)?.country?.names;
-  const geo = names?.["zh-CN"] ?? names?.en ?? NOT_AVAILABLE;
-  cache.set(cacheKey, geo);
-  return geo;
+  try {
+    const names = reader.get(ip)?.country?.names;
+    return names?.["zh-CN"] ?? names?.en ?? NOT_AVAILABLE;
+  } catch {
+    return NOT_AVAILABLE;
+  }
 };
